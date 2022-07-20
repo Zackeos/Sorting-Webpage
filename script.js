@@ -129,10 +129,13 @@ temp = [...heights]
 console.log(heights)
 insertionanimations = []
 
+//loop through from first item
 for (let x=1; x<heights.length; x++){
   currentvalue = heights[x]
   currentpos = x
-  while(currentpos>0 && heights[currentpos-1]>currentvalue){
+  //for each item, pull it back until it is either at the start or it is smaller than bar before it
+  while(currentpos>0 && heights[currentpos-1]<currentvalue){
+    //add swap to animations array
     insertionanimations.push([initial[heights[currentpos-1]],initial[heights[currentpos]]])
     heights[currentpos] = heights[currentpos-1]
     currentpos=currentpos-1
