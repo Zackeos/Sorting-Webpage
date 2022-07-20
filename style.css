@@ -1,5 +1,5 @@
 body {
-  background: #20262E;
+  background: #fff;
   padding: 20px;
   font-family: Helvetica;
 }
@@ -9,20 +9,44 @@ body {
   height:300px;
   width:50%;
   position: relative;
+  border: 5px solid white;
+  border-radius: 10px;
+  padding: 10px 10px 0px 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 #bars{
   display:flex;
   
 }
 .bar{
-  width:60px;
+  width:56px;
   background:red;
   transition: 1s;
+  box-sizing: border-box;
   bottom:0;
+  border-radius: 5px 5px 0px 0px;
+  margin: 0px 2px 0px 2px;
   position:absolute;
 }
 .half{
   width:50%;
   box-sizing: border-box;
   float: left;
+}
+.button{
+  background-color: #8E24AA;
+  border-radius: 10px;
+  height: 30px;
+  padding-left: 20px;
+  border: none;
+  padding-right: 20px;
+  transition-duration: 0.4s;
+}
+.button:hover{
+  background-color: #6A1B9A;
+}
+.button-text{
+  line-height: 100%;
+  color: white;
+  font-family: 'Nunito', sans-serif;
 }

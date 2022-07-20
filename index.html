@@ -7,6 +7,9 @@
   <meta name="viewport" content="width=device-width">
   <title>bubble sort</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+  </style>
 </head>
   
 
@@ -18,9 +21,9 @@
       <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)">
     </div> 
   </div>
-  <button @click="previous">PREVIOUS</button>
-  <button @click="next">NEXT</button>
-  <button @click="reset">RESET</button>
+  <button class="button" @click="previous"><span class="button-text">Previous</span></button>
+  <button class="button" @click="next"><span class="button-text">Next</span></button>
+  <button class="button" @click="reset"><span class="button-text">Reset</span></button>
   <script src="script.js"></script>
 </div>
 

@@ -1,4 +1,15 @@
-heights = [3,5,13,10,7,2,9]
+heights = []
+for (let x=0; x<10; x++){
+  while (true){
+    a = Math.floor(Math.random() * 12) + 1
+    if (!(heights.includes(a))){
+      break
+    }
+  }
+  heights.push(a)
+}
+temp = [...heights]
+console.log(heights)
 animations = []
 var initial = {};
 for (let i = 0; i < heights.length; i++){
@@ -25,7 +36,7 @@ while (!(inOrder(heights))){
   }
 }
 console.log(animations)
-heights = [3,5,13,10,7,2,9]
+heights = temp
 var app = new Vue({
   el: "#app",
   data() {
@@ -38,7 +49,10 @@ var app = new Vue({
         { h: heights[3], offset:0, color:"orange"},
         { h: heights[4], offset:0, color:"gray"},
         { h: heights[5], offset:0, color:"yellow"},
-          { h: heights[6], offset:0,color:"blue" }
+        { h: heights[6], offset:0,color:"#3fb4d4" },
+        { h: heights[7], offset:0,color:"#21c912" },
+        { h: heights[8], offset:0,color:"#fc3ad6" },
+          { h: heights[9], offset:0,color:"#affc3a" }
       ],
       count: 0
     }
