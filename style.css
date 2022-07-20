@@ -1,0 +1,28 @@
+body {
+  background: #20262E;
+  padding: 20px;
+  font-family: Helvetica;
+}
+
+#app {
+  background: #fff;
+  height:300px;
+  width:50%;
+  position: relative;
+}
+#bars{
+  display:flex;
+  
+}
+.bar{
+  width:60px;
+  background:red;
+  transition: 1s;
+  bottom:0;
+  position:absolute;
+}
+.half{
+  width:50%;
+  box-sizing: border-box;
+  float: left;
+}

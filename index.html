@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>bubble sort</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+  
+
+
+<body>
+  <div class = "half">wfq</div>
+  <div id="app" class = "half">
+    <div id="bars">
+      <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)">
+    </div> 
+  </div>
+  <button @click="previous">PREVIOUS</button>
+  <button @click="next">NEXT</button>
+  <button @click="reset">RESET</button>
+  <script src="script.js"></script>
+</div>
+
+</body>
+
+</html>
