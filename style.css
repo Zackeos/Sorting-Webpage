@@ -1,18 +1,15 @@
 body {
-  background: #fff;
+  background: #E1BEE7;
   padding: 20px;
-  font-family: Helvetica;
+  font-family: 'Nunito', sans-serif;
 }
 
-#app {
+#bubble, #insertion {
   background: #fff;
   height:300px;
   width:50%;
   position: relative;
-  border: 5px solid white;
-  border-radius: 10px;
-  padding: 10px 10px 0px 10px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  margin-left: 5%;
 }
 #bars{
   display:flex;
@@ -29,24 +26,67 @@ body {
   position:absolute;
 }
 .half{
-  width:50%;
+  width:45%;
   box-sizing: border-box;
   float: left;
+  border: 5px solid white;
+  border-radius: 10px;
+  padding: 10px 10px 0px 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  background-color: #fff;
+}
+#Bubblepage.hide, #Insertionpage.hide{
+  display:none;
+}
+
+#Bubblepage, #Insertionpage{
+  width: 100%;
 }
 .button{
   background-color: #8E24AA;
-  border-radius: 10px;
+  border-radius: 7px;
   height: 30px;
   padding-left: 20px;
   border: none;
   padding-right: 20px;
-  transition-duration: 0.4s;
+
 }
 .button:hover{
   background-color: #6A1B9A;
 }
-.button-text{
+.button:active{
+  outline: 2px solid  #E1BEE7;
+}
+.primary-button-text{
   line-height: 100%;
   color: white;
-  font-family: 'Nunito', sans-serif;
 }
+.secondary-button-text{
+  line-height: 100%;
+  color: #8E24AA;
+}
+#banner{
+  border: 2px solid #fafafa;
+  padding: 4px 0px 4px;
+  box-sizing: border-box;
+  margin-left: 25%;
+  margin-right: 25%;
+  width: 50%;
+  background-color:#fff;
+  margin-bottom: 20px;
+  font-size: 24px;
+  border-radius: 10px;
+  text-align: center;
+}
+#bottomr{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 6px;
+  border: 2px solid #8E24AA;
+  background-color: #fff;
+  padding: 0px 20px 0px;
+  height: 30px;
+  
+}
+

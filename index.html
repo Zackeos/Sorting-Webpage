@@ -8,24 +8,47 @@
   <title>bubble sort</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
   </style>
 </head>
   
 
 
 <body>
-  <div class = "half">wfq</div>
-  <div id="app" class = "half">
-    <div id="bars">
-      <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)">
-    </div> 
+
+
+  <div id="Bubblepage">
+    <div id="banner">Bubble Sort</div>
+    <div class = "half">d</div>
+    <div id="bubble" class = "half">
+      <div id="bars">
+        <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)"></div> 
+      </div>
+      <button class="button" @click="previous"><span class="primary-button-text">Previous</span></button>
+      <button class="button" @click="next"><span class="primary-button-text">Next</span></button>
+      <button class="button" @click="reset"><span class="primary-button-text">Reset</span></button>
+    </div>
   </div>
-  <button class="button" @click="previous"><span class="button-text">Previous</span></button>
-  <button class="button" @click="next"><span class="button-text">Next</span></button>
-  <button class="button" @click="reset"><span class="button-text">Reset</span></button>
+
+
+  <div id="Insertionpage" class="hide">
+    <div id="banner">Insertion Sort</div>
+    <div id="bubble" style="display: none"></div>
+      <div class = "half">d</div>
+      <div id="insertion" class = "half">
+        <div id="bars">
+          <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)"></div> 
+        </div>
+        <button class="button" @click="previous"><span class="primary-button-text">Previous</span></button>
+        <button class="button" @click="next"><span class="primary-button-text">Next</span></button>
+        <button class="button" @click="reset"><span class="primary-button-text">Reset</span></button>
+      </div>
+    </div>
+
+
+
   <script src="script.js"></script>
-</div>
+  <button id="bottomr" onclick="switchScreen()"><span class="secondary-button-text">Next</span></button>
 
 </body>
 
