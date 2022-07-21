@@ -1,3 +1,20 @@
+//settings
+let numofbars = 10  //max 12 for some reason
+let transparency = 0.35
+
+
+
+// colours = ["green", "red", "blue", "orange", "gray", "yellow", "#3fb4d4", "#21c912", "#fc3ad6", "#affc3a"]
+
+//generate random array of colours
+randomColor = function(){
+  return "#"+Math.floor(Math.random()*16777215).toString(16);
+}
+colours = []
+for (let x=0; x<numofbars; x++){
+  colours.push(randomColor())
+}
+
 //Functions to toggle the showing of bubble/insertion sort
 function toggle(id){
   var x = document.getElementById(id)
@@ -8,18 +25,37 @@ function toggle(id){
     x.classList.add("hide")
   }
 }
-
 function switchScreen(){
   toggle("Bubblepage")
   toggle("Insertionpage")
 }
 
+class bar{
+  constructor(height, color){
+    this.h=height
+    this.color=color
+    this.offset=0
+    this.opacity=transparency
+  }
+  light(){
+    this.opacity=transparency
+  }
+  dark(){
+    this.opacity=1
+  }
+  right(amount){
+    this.offset += amount
+  }
+  left(amount){
+    this.offset -= amount
+  }
+}
 
 
-//BUBBLE SORT
-//generate 10 random heights in an array
+
+//generate random heights in an array
 heights = []
-for (let x=0; x<10; x++){
+for (let x=0; x<numofbars; x++){
   while (true){
     a = Math.floor(Math.random() * 12) + 1
     if (!(heights.includes(a))){
@@ -39,6 +75,7 @@ for (let i = 0; i < heights.length; i++){
 temp = [...heights]
 bubbleanimations = []
 
+//BUBBLE SORT
 //used to check if an array is in order
 function inOrder(vals) {
   for(let i = 0; i < vals.length-1; i++){
@@ -71,47 +108,49 @@ var bubble = new Vue({
   el: "#bubble",
   data() {
   	// store the info about the bars
+    let barslist = []
+    for (let x=0; x<numofbars; x++){
+      let thing = new bar(heights[x],colours[x])
+      barslist.push(thing)
+    }
     return {
-      bars: [
-        { h: heights[0], offset:0, color:"green", opacity:0.5},
-        { h: heights[1], offset:0, color:"red", opacity:0.5},
-        { h: heights[2], offset:0, color:"blue", opacity:0.5},
-        { h: heights[3], offset:0, color:"orange", opacity:0.5},
-        { h: heights[4], offset:0, color:"gray", opacity:0.5},
-        { h: heights[5], offset:0, color:"yellow", opacity:0.5},
-        { h: heights[6], offset:0, color:"#3fb4d4", opacity:0.5},
-        { h: heights[7], offset:0, color:"#21c912", opacity:0.5},
-        { h: heights[8], offset:0, color:"#fc3ad6", opacity:0.5},
-        { h: heights[9], offset:0, color:"#affc3a", opacity:0.5}
-      ],
+      bars: barslist,
       count: 0
     }
   },
   methods: {
     finish: function(){
+      const buttons = document.getElementsByClassName("button")
+      for (let button=0; button<buttons.length; button++){
+        buttons[button].disabled = true
+      }
       const allbars = document.getElementsByClassName("bar")
       for (let x = 0; x<allbars.length; x++){
         allbars[x].style.transition = "0.05s";
       }
       var fullsolve = setInterval(() => {
-        if (this.count == bubbleanimations.length){
+        if (this.count == bubbleanimations.length-1){
           clearInterval(fullsolve)
           for (let x = 0; x<allbars.length; x++){
             allbars[x].style.transition = "1s";
           }
+          for (let button=0; button<buttons.length; button++){
+            buttons[button].disabled = false
+          }
         }
-        this.bars[bubbleanimations[this.count][0]].opacity = 1
-        this.bars[bubbleanimations[this.count][1]].opacity = 1
+        this.bars[bubbleanimations[this.count][0]].dark()
+        this.bars[bubbleanimations[this.count][1]].dark()
         setTimeout(() => {
-          this.bars[bubbleanimations[this.count][0]].offset += 1
-          this.bars[bubbleanimations[this.count][1]].offset -= 1
+          this.bars[bubbleanimations[this.count][0]].right(1)
+          this.bars[bubbleanimations[this.count][1]].left(1)
         }, 50);
         setTimeout(() => {
-          this.bars[bubbleanimations[this.count][0]].opacity = 0.5
-          this.bars[bubbleanimations[this.count][1]].opacity = 0.5
+          this.bars[bubbleanimations[this.count][0]].light()
+          this.bars[bubbleanimations[this.count][1]].light()
           this.count++
         }, 100);
       }, 150);
+      
     },
     //perform next animation in bubbleanimations
   	next: function(){
@@ -121,15 +160,15 @@ var bubble = new Vue({
       }
 
       if (this.count < bubbleanimations.length) {
-        this.bars[bubbleanimations[this.count][0]].opacity = 1
-        this.bars[bubbleanimations[this.count][1]].opacity = 1
+        this.bars[bubbleanimations[this.count][0]].dark()
+        this.bars[bubbleanimations[this.count][1]].dark()
         setTimeout(() => {
-          this.bars[bubbleanimations[this.count][0]].offset += 1
-          this.bars[bubbleanimations[this.count][1]].offset -= 1
+          this.bars[bubbleanimations[this.count][0]].right(1)
+          this.bars[bubbleanimations[this.count][1]].left(1)
         }, 1000);
         setTimeout(() => {
-          this.bars[bubbleanimations[this.count][0]].opacity = 0.5
-          this.bars[bubbleanimations[this.count][1]].opacity = 0.5
+          this.bars[bubbleanimations[this.count][0]].light()
+          this.bars[bubbleanimations[this.count][1]].light()
           this.count++
         }, 2000);
       }
@@ -143,8 +182,8 @@ var bubble = new Vue({
     previous: function(){
       if (this.count > 0){
         this.count -= 1
-        this.bars[bubbleanimations[this.count][0]].offset -= 1
-        this.bars[bubbleanimations[this.count][1]].offset += 1
+        this.bars[bubbleanimations[this.count][0]].left(1)
+        this.bars[bubbleanimations[this.count][1]].right(1)
       }
     },
     //bring back to original state
@@ -193,19 +232,13 @@ var insertion = new Vue({
   el: "#insertion",
   data() {
   	// store the info about the bars
+    let barslist = []
+    for (let x=0; x<numofbars; x++){
+      let thing = new bar(heights[x],colours[x])
+      barslist.push(thing)
+    }
     return {
-      bars: [
-        { h: heights[0], offset:0, color:"green", opacity:0.5},
-        { h: heights[1], offset:0, color:"red", opacity:0.5},
-        { h: heights[2], offset:0, color:"blue", opacity:0.5},
-        { h: heights[3], offset:0, color:"orange", opacity:0.5},
-        { h: heights[4], offset:0, color:"gray", opacity:0.5},
-        { h: heights[5], offset:0, color:"yellow", opacity:0.5},
-        { h: heights[6], offset:0,color:"#3fb4d4", opacity:0.5},
-        { h: heights[7], offset:0,color:"#21c912", opacity:0.5},
-        { h: heights[8], offset:0,color:"#fc3ad6", opacity:0.5},
-          { h: heights[9], offset:0,color:"#affc3a", opacity:0.5}
-      ],
+      bars: barslist,
       count: 0
     }
   },
@@ -216,21 +249,21 @@ var insertion = new Vue({
         allbars[x].style.transition = "0.05s";
       }
       var fullsolve = setInterval(() => {
-        if (this.count == insertionanimations.length){
+        if (this.count == insertionanimations.length-1){
           clearInterval(fullsolve)
           for (let x = 0; x<allbars.length; x++){
             allbars[x].style.transition = "1s";
           }
         }
-        this.bars[insertionanimations[this.count][0]].opacity = 1
-        this.bars[insertionanimations[this.count][1]].opacity = 1
+        this.bars[insertionanimations[this.count][0]].dark()
+        this.bars[insertionanimations[this.count][1]].dark()
         setTimeout(() => {
-          this.bars[insertionanimations[this.count][0]].offset += 1
-          this.bars[insertionanimations[this.count][1]].offset -= 1
+          this.bars[insertionanimations[this.count][0]].right(1)
+          this.bars[insertionanimations[this.count][1]].left(1)
         }, 50);
         setTimeout(() => {
-          this.bars[insertionanimations[this.count][0]].opacity = 0.5
-          this.bars[insertionanimations[this.count][1]].opacity = 0.5
+          this.bars[insertionanimations[this.count][0]].light()
+          this.bars[insertionanimations[this.count][1]].light()
           this.count++
         }, 100);
       }, 150);
@@ -242,15 +275,15 @@ var insertion = new Vue({
       }
 
       if (this.count < insertionanimations.length) {
-        this.bars[insertionanimations[this.count][0]].opacity = 1
-        this.bars[insertionanimations[this.count][1]].opacity = 1
+        this.bars[insertionanimations[this.count][0]].dark()
+        this.bars[insertionanimations[this.count][1]].dark()
         setTimeout(() => {
-          this.bars[insertionanimations[this.count][0]].offset += 1
-          this.bars[insertionanimations[this.count][1]].offset -= 1
+          this.bars[insertionanimations[this.count][0]].right(1)
+          this.bars[insertionanimations[this.count][1]].left(1)
         }, 1000);
         setTimeout(() => {
-          this.bars[insertionanimations[this.count][0]].opacity = 0.5
-          this.bars[insertionanimations[this.count][1]].opacity = 0.5
+          this.bars[insertionanimations[this.count][0]].light()
+          this.bars[insertionanimations[this.count][1]].light()
           this.count++
         }, 2000);
       }
@@ -263,8 +296,8 @@ var insertion = new Vue({
     previous: function(){
       if (this.count > 0){
         this.count -= 1
-        this.bars[insertionanimations[this.count][0]].offset -= 1
-        this.bars[insertionanimations[this.count][1]].offset += 1
+        this.bars[insertionanimations[this.count][0]].left(1)
+        this.bars[insertionanimations[this.count][1]].right(1)
       }
     },
     reset: function(){
