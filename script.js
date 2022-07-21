@@ -1,3 +1,4 @@
+import bubblesort from "./bubblesort.js"
 //settings
 let numofbars = 20
 let transparency = 0.35
@@ -106,31 +107,32 @@ temp = [...heights]
 //BUBBLE SORT
 
 //will be filled with each swap
-bubbleanimations = []
+// bubbleanimations = []
 
-//used to check if an array is in order
-function inOrder(vals) {
-  for(let i = 0; i < vals.length-1; i++){
-    if(vals[i]<vals[i+1]){
-      return false
-    }
-  }
-  return true
-}
+// //used to check if an array is in order
+// function inOrder(vals) {
+//   for(let i = 0; i < vals.length-1; i++){
+//     if(vals[i]<vals[i+1]){
+//       return false
+//     }
+//   }
+//   return true
+// }
 
 //run until list is sorted
-while (!(inOrder(heights))){
-  for (let x = 0; x<heights.length-1; x++){
-    let a = heights[x]
-    let b = heights[x+1]
-    if (a<b){
-      //a swap is made and recorded to the bubbleanimations array
-      bubbleanimations.push([initial[a],initial[b]])
-      heights[x] = b
-      heights[x+1] = a
-    }
-  }
-}
+// while (!(inOrder(heights))){
+//   for (let x = 0; x<heights.length-1; x++){
+//     let a = heights[x]
+//     let b = heights[x+1]
+//     if (a<b){
+//       //a swap is made and recorded to the bubbleanimations array
+//       bubbleanimations.push([initial[a],initial[b]])
+//       heights[x] = b
+//       heights[x+1] = a
+//     }
+//   }
+// }
+bubbleanimations = bubblesort(heights, initial)
 
 //reset heights for drawing of graph
 heights = temp
@@ -142,8 +144,8 @@ var bubble = new Vue({
   	// get the info about the bars
     let barslist = []
     for (let x=0; x<numofbars; x++){
-      let thing = new bar(heights[x],colours[x])
-      barslist.push(thing)
+      let y = new bar(heights[x],colours[x])
+      barslist.push(y)
     }
     return {
       bars: barslist,
