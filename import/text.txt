@@ -1,0 +1,66 @@
+<html>
+  <body>
+  <div id="app">
+  </div>
+  </body>
+  <script src=main>
+</html>
+
+
+main.js
+
+app.js
+
+export Vue.extend({
+
+
+  <title>
+  <blurb>
+  <graph :selectedAlgorithm="selectedAlgorithm" :bars=bars>
+  <div>
+  <button prev>
+  <button next @click=next>
+  <button preset>
+  <button finish>
+  
+  <div>
+      <button @click = "selectedAlgorithm = 'bubble'">show bubble
+      </button>
+
+      <button @click=selectedAlgorithm = 'insert'>show insert
+      </button>
+
+      <button @click=...>show seclect
+      </button>
+</div>
+
+
+watch
+selectedAlgorithm(){
+  reset()
+  reset the bars to what they should be at the start.
+}
+
+data = {
+
+  selectedAlgorithm: "bubble"
+  bars:[5, 6, 4, 3, 5, 2, 1]
+}
+
+methods:{
+  next: this.selectedAlgorithm.next()
+
+}
+
+})
+
+
+bubble.js
+export Vue.extend(...)
+
+insertion
+export Vue.extend(...)
+
+
+
+
