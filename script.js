@@ -1,10 +1,18 @@
 //settings
-let numofbars = 10  //max 12 for some reason
+let numofbars = 12  //max 12 for some reason
 let transparency = 0.35
-
-
+let size = 30
 
 // colours = ["green", "red", "blue", "orange", "gray", "yellow", "#3fb4d4", "#21c912", "#fc3ad6", "#affc3a"]
+
+//calculate reasonable size of bars
+currentSize = document.getElementById("bubble").clientWidth
+size = currentSize/12
+//set widths of bars
+const all = document.getElementsByClassName("bar")
+for (let x=0; x<all.length; x++){
+  all[x].style.width = (size-4)+"px";
+}
 
 //generate random array of colours
 randomColor = function(){
@@ -199,7 +207,7 @@ var bubble = new Vue({
     	return {
         opacity:bar.opacity,
       	background:bar.color,
-        left: 60*(i + bar.offset) + "px",
+        left: size*(i + bar.offset) + "px",
         height: (bar.h * 20) + "px"
       
       } 
@@ -312,7 +320,7 @@ var insertion = new Vue({
     	return {
         opacity:bar.opacity,
       	background:bar.color,
-        left: 60*(i + bar.offset) + "px",
+        left: size*(i + bar.offset) + "px",
         height: (bar.h * 20) + "px"
       
       } 

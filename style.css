@@ -16,7 +16,7 @@ body {
   
 }
 .bar{
-  width:56px;
+  width:px;
   background:red;
   transition: 1s;
   box-sizing: border-box;
