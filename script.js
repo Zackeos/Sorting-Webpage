@@ -73,28 +73,71 @@ var bubble = new Vue({
   	// store the info about the bars
     return {
       bars: [
-        { h: heights[0], offset:0, color:"green"},
-        { h: heights[1], offset:0, color:"red"},
-        { h: heights[2], offset:0, color:"blue"},
-        { h: heights[3], offset:0, color:"orange"},
-        { h: heights[4], offset:0, color:"gray"},
-        { h: heights[5], offset:0, color:"yellow"},
-        { h: heights[6], offset:0,color:"#3fb4d4" },
-        { h: heights[7], offset:0,color:"#21c912" },
-        { h: heights[8], offset:0,color:"#fc3ad6" },
-          { h: heights[9], offset:0,color:"#affc3a" }
+        { h: heights[0], offset:0, color:"green", opacity:0.5},
+        { h: heights[1], offset:0, color:"red", opacity:0.5},
+        { h: heights[2], offset:0, color:"blue", opacity:0.5},
+        { h: heights[3], offset:0, color:"orange", opacity:0.5},
+        { h: heights[4], offset:0, color:"gray", opacity:0.5},
+        { h: heights[5], offset:0, color:"yellow", opacity:0.5},
+        { h: heights[6], offset:0, color:"#3fb4d4", opacity:0.5},
+        { h: heights[7], offset:0, color:"#21c912", opacity:0.5},
+        { h: heights[8], offset:0, color:"#fc3ad6", opacity:0.5},
+        { h: heights[9], offset:0, color:"#affc3a", opacity:0.5}
       ],
       count: 0
     }
   },
   methods: {
+    finish: function(){
+      const allbars = document.getElementsByClassName("bar")
+      for (let x = 0; x<allbars.length; x++){
+        allbars[x].style.transition = "0.05s";
+      }
+      var fullsolve = setInterval(() => {
+        if (this.count == bubbleanimations.length){
+          clearInterval(fullsolve)
+          for (let x = 0; x<allbars.length; x++){
+            allbars[x].style.transition = "1s";
+          }
+        }
+        this.bars[bubbleanimations[this.count][0]].opacity = 1
+        this.bars[bubbleanimations[this.count][1]].opacity = 1
+        setTimeout(() => {
+          this.bars[bubbleanimations[this.count][0]].offset += 1
+          this.bars[bubbleanimations[this.count][1]].offset -= 1
+        }, 50);
+        setTimeout(() => {
+          this.bars[bubbleanimations[this.count][0]].opacity = 0.5
+          this.bars[bubbleanimations[this.count][1]].opacity = 0.5
+          this.count++
+        }, 100);
+      }, 150);
+    },
     //perform next animation in bubbleanimations
   	next: function(){
-      if (this.count < bubbleanimations.length) {
-      this.bars[bubbleanimations[this.count][0]].offset += 1
-      this.bars[bubbleanimations[this.count][1]].offset -= 1
-      this.count++
+      const buttons = document.getElementsByClassName("button")
+      for (let button=0; button<buttons.length; button++){
+        buttons[button].disabled = true
       }
+
+      if (this.count < bubbleanimations.length) {
+        this.bars[bubbleanimations[this.count][0]].opacity = 1
+        this.bars[bubbleanimations[this.count][1]].opacity = 1
+        setTimeout(() => {
+          this.bars[bubbleanimations[this.count][0]].offset += 1
+          this.bars[bubbleanimations[this.count][1]].offset -= 1
+        }, 1000);
+        setTimeout(() => {
+          this.bars[bubbleanimations[this.count][0]].opacity = 0.5
+          this.bars[bubbleanimations[this.count][1]].opacity = 0.5
+          this.count++
+        }, 2000);
+      }
+      setTimeout(() => {
+        for (let button=0; button<buttons.length; button++){
+          buttons[button].disabled = false
+        }
+      }, 2001);
     },
     //undo last animation
     previous: function(){
@@ -115,6 +158,7 @@ var bubble = new Vue({
     getBarStyle: function(i, bar){
     	// figure out where a bar should be positioned. Each one has width 60px
     	return {
+        opacity:bar.opacity,
       	background:bar.color,
         left: 60*(i + bar.offset) + "px",
         height: (bar.h * 20) + "px"
@@ -126,7 +170,6 @@ var bubble = new Vue({
 
 //INSERTION SORT
 temp = [...heights]
-console.log(heights)
 insertionanimations = []
 
 //loop through from first item
@@ -152,27 +195,70 @@ var insertion = new Vue({
   	// store the info about the bars
     return {
       bars: [
-        { h: heights[0], offset:0, color:"green"},
-        { h: heights[1], offset:0, color:"red"},
-        { h: heights[2], offset:0, color:"blue"},
-        { h: heights[3], offset:0, color:"orange"},
-        { h: heights[4], offset:0, color:"gray"},
-        { h: heights[5], offset:0, color:"yellow"},
-        { h: heights[6], offset:0,color:"#3fb4d4" },
-        { h: heights[7], offset:0,color:"#21c912" },
-        { h: heights[8], offset:0,color:"#fc3ad6" },
-          { h: heights[9], offset:0,color:"#affc3a" }
+        { h: heights[0], offset:0, color:"green", opacity:0.5},
+        { h: heights[1], offset:0, color:"red", opacity:0.5},
+        { h: heights[2], offset:0, color:"blue", opacity:0.5},
+        { h: heights[3], offset:0, color:"orange", opacity:0.5},
+        { h: heights[4], offset:0, color:"gray", opacity:0.5},
+        { h: heights[5], offset:0, color:"yellow", opacity:0.5},
+        { h: heights[6], offset:0,color:"#3fb4d4", opacity:0.5},
+        { h: heights[7], offset:0,color:"#21c912", opacity:0.5},
+        { h: heights[8], offset:0,color:"#fc3ad6", opacity:0.5},
+          { h: heights[9], offset:0,color:"#affc3a", opacity:0.5}
       ],
       count: 0
     }
   },
   methods: {
-  	next: function(){
-      if (this.count < insertionanimations.length) {
-        this.bars[insertionanimations[this.count][0]].offset += 1
-        this.bars[insertionanimations[this.count][1]].offset -= 1
-        this.count++
+    finish: function(){
+      const allbars = document.getElementsByClassName("bar")
+      for (let x = 0; x<allbars.length; x++){
+        allbars[x].style.transition = "0.05s";
       }
+      var fullsolve = setInterval(() => {
+        if (this.count == insertionanimations.length){
+          clearInterval(fullsolve)
+          for (let x = 0; x<allbars.length; x++){
+            allbars[x].style.transition = "1s";
+          }
+        }
+        this.bars[insertionanimations[this.count][0]].opacity = 1
+        this.bars[insertionanimations[this.count][1]].opacity = 1
+        setTimeout(() => {
+          this.bars[insertionanimations[this.count][0]].offset += 1
+          this.bars[insertionanimations[this.count][1]].offset -= 1
+        }, 50);
+        setTimeout(() => {
+          this.bars[insertionanimations[this.count][0]].opacity = 0.5
+          this.bars[insertionanimations[this.count][1]].opacity = 0.5
+          this.count++
+        }, 100);
+      }, 150);
+    },
+  	next: function(){
+      const buttons = document.getElementsByClassName("button")
+      for (let button=0; button<buttons.length; button++){
+        buttons[button].disabled = true
+      }
+
+      if (this.count < insertionanimations.length) {
+        this.bars[insertionanimations[this.count][0]].opacity = 1
+        this.bars[insertionanimations[this.count][1]].opacity = 1
+        setTimeout(() => {
+          this.bars[insertionanimations[this.count][0]].offset += 1
+          this.bars[insertionanimations[this.count][1]].offset -= 1
+        }, 1000);
+        setTimeout(() => {
+          this.bars[insertionanimations[this.count][0]].opacity = 0.5
+          this.bars[insertionanimations[this.count][1]].opacity = 0.5
+          this.count++
+        }, 2000);
+      }
+      setTimeout(() => {
+        for (let button=0; button<buttons.length; button++){
+          buttons[button].disabled = false
+        }
+      }, 2001);
     },
     previous: function(){
       if (this.count > 0){
@@ -191,6 +277,7 @@ var insertion = new Vue({
     getBarStyle: function(i, bar){
     	// figure out where a bar should be positioned. Each one has width 60px
     	return {
+        opacity:bar.opacity,
       	background:bar.color,
         left: 60*(i + bar.offset) + "px",
         height: (bar.h * 20) + "px"

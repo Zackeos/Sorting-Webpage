@@ -66,11 +66,21 @@ body {
   color: #8E24AA;
 }
 #banner{
+  width: 100%;
+  background-color: #fff;
+  position: absolute; top: 0; left: 0;
+  height: 50px;
+  float: left;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.07);
+}
+#title-banner{
+  margin-top: 40px;
   border: 2px solid #fafafa;
   padding: 4px 0px 4px;
   box-sizing: border-box;
   margin-left: 25%;
   margin-right: 25%;
+  float: left;
   width: 50%;
   background-color:#fff;
   margin-bottom: 20px;
@@ -86,7 +96,6 @@ body {
   border: 2px solid #8E24AA;
   background-color: #fff;
   padding: 0px 20px 0px;
-  height: 30px;
-  
+  height: 30px; 
 }
 
