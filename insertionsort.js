@@ -1,11 +1,11 @@
 //INSERTION SORT
 
 
-export function insertionsort(heights, initial) {
-  animations = []
+export default function insertionsort(heights, initial){
+  let animations = []
   for (let x=1; x<heights.length; x++){
-    currentvalue = heights[x]
-    currentpos = x
+    let currentvalue = heights[x]
+    let currentpos = x
     //for each item, pull it back until it is either at the start or it is smaller than bar before it
     let n = 0;
     while(currentpos>0 && heights[currentpos-1]<currentvalue){

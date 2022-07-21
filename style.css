@@ -98,4 +98,14 @@ body {
   padding: 0px 20px 0px;
   height: 30px; 
 }
+#bottoml{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 6px;
+  border: 2px solid #8E24AA;
+  background-color: #fff;
+  padding: 0px 20px 0px;
+  height: 30px; 
+}
 

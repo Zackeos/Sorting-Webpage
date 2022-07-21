@@ -1,14 +1,15 @@
 import bubblesort from "./bubblesort.js"
+import insertionsort from "./insertionsort.js"
 //settings
-let numofbars = 30
+let numofbars = 10
 let transparency = 0.35
 // let size = 30
 
 // let colours = ["green", "red", "blue", "orange", "gray", "yellow", "#3fb4d4", "#21c912", "#fc3ad6", "#affc3a"]
 
 //calculate size of bars to fit screen
-currentSize = document.getElementById("bubble").clientWidth
-size = currentSize/numofbars
+let currentSize = document.getElementById("bubble").clientWidth
+let size = currentSize/numofbars
 //set widths of bars
 const all = document.getElementsByClassName("bar")
 for (let x=0; x<all.length; x++){
@@ -16,30 +17,16 @@ for (let x=0; x<all.length; x++){
 }
 
 //generate random array of colours
-randomColor = function(){
+const randomColor = function(){
   return "#"+Math.floor(Math.random()*16777215).toString(16);
 }
-colours = []
+let colours = []
 for (let x=0; x<numofbars; x++){
   colours.push(randomColor())
 }
 
-//Functions to toggle the showing of bubble/insertion sort
-function toggle(id){
-  var x = document.getElementById(id)
-  if(x.classList.contains("hide")){
-    x.classList.remove("hide")
-  }
-  else{
-    x.classList.add("hide")
-  }
-}
-function switchScreen(){
-  toggle("Bubblepage")
-  toggle("Insertionpage")
-}
 
-toggleButtons = function(){
+let toggleButtons = function(){
   const buttons = document.getElementsByClassName("button")
   if (buttons[0].disabled){
     for (let button=0; button<buttons.length; button++){
@@ -87,7 +74,7 @@ function shuffleArray(array) {
 
 
 //generate random heights in an array
-heights = []
+let heights = []
 for (let x=1; x<numofbars+1; x++){
   heights.push(x)
 }
@@ -95,44 +82,17 @@ shuffleArray(heights)
 
 
 //initial will be used to identify bars using their heights
-var initial = {};
+let initial = {};
 for (let i = 0; i < heights.length; i++){
   initial[heights[i]] = i
 }
 
 //create shallow copy as heights will be changing
-temp = [...heights]
+let temp = [...heights]
 
 
-//BUBBLE SORT
 
-//will be filled with each swap
-// bubbleanimations = []
-
-// //used to check if an array is in order
-// function inOrder(vals) {
-//   for(let i = 0; i < vals.length-1; i++){
-//     if(vals[i]<vals[i+1]){
-//       return false
-//     }
-//   }
-//   return true
-// }
-
-//run until list is sorted
-// while (!(inOrder(heights))){
-//   for (let x = 0; x<heights.length-1; x++){
-//     let a = heights[x]
-//     let b = heights[x+1]
-//     if (a<b){
-//       //a swap is made and recorded to the bubbleanimations array
-//       bubbleanimations.push([initial[a],initial[b]])
-//       heights[x] = b
-//       heights[x+1] = a
-//     }
-//   }
-// }
-bubbleanimations = bubblesort(heights, initial)
+let bubbleanimations = bubblesort(heights, initial)
 
 //reset heights for drawing of graph
 heights = temp
@@ -246,24 +206,12 @@ var bubble = new Vue({
   }
 })
 
-//INSERTION SORT
-temp = [...heights]
-insertionanimations = []
 
-//loop through from first item
-for (let x=1; x<heights.length; x++){
-  currentvalue = heights[x]
-  currentpos = x
-  //for each item, pull it back until it is either at the start or it is smaller than bar before it
-  let n = 0;
-  while(currentpos>0 && heights[currentpos-1]<currentvalue){
-    //add swap to animations array
-    insertionanimations.push([initial[heights[currentpos-1]],initial[heights[currentpos]]])
-    heights[currentpos] = heights[currentpos-1]
-    currentpos=currentpos-1
-  heights[currentpos] = currentvalue
-  }
-}
+
+temp = [...heights]
+
+
+let insertionanimations = insertionsort(heights, initial)
 heights=temp
 
 
