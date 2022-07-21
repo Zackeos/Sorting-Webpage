@@ -1,5 +1,5 @@
 //settings
-let numofbars = 12  //max 12 for some reason
+let numofbars = 20
 let transparency = 0.35
 // let size = 30
 
@@ -7,7 +7,7 @@ let transparency = 0.35
 
 //calculate size of bars to fit screen
 currentSize = document.getElementById("bubble").clientWidth
-size = currentSize/12
+size = currentSize/numofbars
 //set widths of bars
 const all = document.getElementsByClassName("bar")
 for (let x=0; x<all.length; x++){
@@ -38,6 +38,21 @@ function switchScreen(){
   toggle("Insertionpage")
 }
 
+toggleButtons = function(){
+  const buttons = document.getElementsByClassName("button")
+  if (buttons[0].disabled){
+    for (let button=0; button<buttons.length; button++){
+      buttons[button].disabled = false
+    }
+  }else{
+    for (let button=0; button<buttons.length; button++){
+      buttons[button].disabled = true
+    }
+  }
+    
+
+}
+
 class bar{
   constructor(height, color){
     this.h=height
@@ -59,19 +74,24 @@ class bar{
   }
 }
 
+//array shuffle function from stack overflow
+function shuffleArray(array) {
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+}
 
 
 //generate random heights in an array
 heights = []
-for (let x=0; x<numofbars; x++){
-  while (true){
-    a = Math.floor(Math.random() * 12) + 1
-    if (!(heights.includes(a))){
-      break
-    }
-  }
-  heights.push(a)
+for (let x=1; x<numofbars+1; x++){
+  heights.push(x)
 }
+shuffleArray(heights)
+
 
 //initial will be used to identify bars using their heights
 var initial = {};
@@ -133,69 +153,67 @@ var bubble = new Vue({
   methods: {
     //function to go through all steps in animation list very fast
     finish: function(){
-      //disable all buttons while function is running
-      const buttons = document.getElementsByClassName("button")
-      for (let button=0; button<buttons.length; button++){
-        buttons[button].disabled = true
-      }
-      //speed up transition time for bars
-      const allbars = document.getElementsByClassName("bar")
-      for (let x = 0; x<allbars.length; x++){
-        allbars[x].style.transition = "0.05s";
-      }
-      //run each animation in turn (150ms per)
-      var fullsolve = setInterval(() => {
-
-        this.bars[bubbleanimations[this.count][0]].dark()
-        this.bars[bubbleanimations[this.count][1]].dark()
-        setTimeout(() => {
-          this.bars[bubbleanimations[this.count][0]].right(1)
-          this.bars[bubbleanimations[this.count][1]].left(1)
-        }, 50);
-        setTimeout(() => {
-          this.bars[bubbleanimations[this.count][0]].light()
-          this.bars[bubbleanimations[this.count][1]].light()
-          this.count++
-        }, 100);
-        //check if finished
-        if (this.count == bubbleanimations.length){
-          clearInterval(fullsolve)
-          //when finished, reset transition time and re-enable buttons
-          for (let x = 0; x<allbars.length; x++){
-            allbars[x].style.transition = "1s";
-          }
-          for (let button=0; button<buttons.length; button++){
-            buttons[button].disabled = false
-          }
+      if (this.count == bubbleanimations.length){}
+      else{
+        //disable all buttons while function is running
+        toggleButtons()
+        //speed up transition time for bars
+        const allbars = document.getElementsByClassName("bar")
+        for (let x = 0; x<allbars.length; x++){
+          allbars[x].style.transition = "0.05s";
         }
-      }, 150);
+        //run each animation in turn (150ms per)
+        var fullsolve = setInterval(() => {
+
+          this.bars[bubbleanimations[this.count][0]].dark()
+          this.bars[bubbleanimations[this.count][1]].dark()
+          setTimeout(() => {
+            this.bars[bubbleanimations[this.count][0]].right(1)
+            this.bars[bubbleanimations[this.count][1]].left(1)
+          }, 50);
+          setTimeout(() => {
+            this.bars[bubbleanimations[this.count][0]].light()
+            this.bars[bubbleanimations[this.count][1]].light()
+            this.count++
+          }, 100);
+          //check if finished
+          if (this.count == bubbleanimations.length-1){
+            clearInterval(fullsolve)
+            //when finished, reset transition time and re-enable buttons
+            for (let x = 0; x<allbars.length; x++){
+              allbars[x].style.transition = "1s";
+            }
+            toggleButtons()
+          }
+        }, 150);
+      }
       
     },
     //perform next animation in bubbleanimations
   	next: function(){
-      const buttons = document.getElementsByClassName("button")
-      for (let button=0; button<buttons.length; button++){
-        buttons[button].disabled = true
-      }
+      if (this.count == bubbleanimations.length){}
+      else{
+        //disable buttons during animation
+        const buttons = document.getElementsByClassName("button")
+        toggleButtons()
 
-      if (this.count < bubbleanimations.length) {
-        this.bars[bubbleanimations[this.count][0]].dark()
-        this.bars[bubbleanimations[this.count][1]].dark()
-        setTimeout(() => {
-          this.bars[bubbleanimations[this.count][0]].right(1)
-          this.bars[bubbleanimations[this.count][1]].left(1)
-        }, 1000);
-        setTimeout(() => {
-          this.bars[bubbleanimations[this.count][0]].light()
-          this.bars[bubbleanimations[this.count][1]].light()
-          this.count++
-        }, 2000);
-      }
-      setTimeout(() => {
-        for (let button=0; button<buttons.length; button++){
-          buttons[button].disabled = false
+        if (this.count < bubbleanimations.length) {
+          this.bars[bubbleanimations[this.count][0]].dark()
+          this.bars[bubbleanimations[this.count][1]].dark()
+          setTimeout(() => {
+            this.bars[bubbleanimations[this.count][0]].right(1)
+            this.bars[bubbleanimations[this.count][1]].left(1)
+          }, 1000);
+          setTimeout(() => {
+            this.bars[bubbleanimations[this.count][0]].light()
+            this.bars[bubbleanimations[this.count][1]].light()
+            this.count++
+          }, 2000);
         }
-      }, 2001);
+        setTimeout(() => {
+          toggleButtons()
+        }, 2001);
+      }
     },
     //undo last animation
     previous: function(){
@@ -219,7 +237,7 @@ var bubble = new Vue({
         opacity:bar.opacity,
       	background:bar.color,
         left: size*(i + bar.offset) + "px",
-        height: (bar.h * 20) + "px"
+        height: (245/numofbars*bar.h) + "px"
       
       } 
     }
@@ -235,15 +253,17 @@ for (let x=1; x<heights.length; x++){
   currentvalue = heights[x]
   currentpos = x
   //for each item, pull it back until it is either at the start or it is smaller than bar before it
-  while(currentpos>0 && heights[currentpos-1]<currentvalue){
+  let n = 0;
+  while(currentpos>0 && heights[currentpos-1]<currentvalue && n < 100){
     //add swap to animations array
     insertionanimations.push([initial[heights[currentpos-1]],initial[heights[currentpos]]])
     heights[currentpos] = heights[currentpos-1]
     currentpos=currentpos-1
   heights[currentpos] = currentvalue
+  n++;
   }
 }
-
+alert(n);
 heights=temp
 
 
@@ -263,65 +283,61 @@ var insertion = new Vue({
   },
   methods: {
     finish: function(){
-      //disable all buttons while function is running
-      const buttons = document.getElementsByClassName("button")
-      for (let button=0; button<buttons.length; button++){
-        buttons[button].disabled = true
-      }
-      //speed up transition time for all bars
-      const allbars = document.getElementsByClassName("bar")
-      for (let x = 0; x<allbars.length; x++){
-        allbars[x].style.transition = "0.05s";
-      }
-      var fullsolve = setInterval(() => {
-        this.bars[insertionanimations[this.count][0]].dark()
-        this.bars[insertionanimations[this.count][1]].dark()
-        setTimeout(() => {
-          this.bars[insertionanimations[this.count][0]].right(1)
-          this.bars[insertionanimations[this.count][1]].left(1)
-        }, 50);
-        setTimeout(() => {
-          this.bars[insertionanimations[this.count][0]].light()
-          this.bars[insertionanimations[this.count][1]].light()
-          this.count++
-        }, 100);
-        //check if finished
-        if (this.count == insertionanimations.length-1){
-          clearInterval(fullsolve)
-          //when finished, reset transition time and re-enable buttons
-          for (let x = 0; x<allbars.length; x++){
-            allbars[x].style.transition = "1s";
-          }
-          for (let button=0; button<buttons.length; button++){
-            buttons[button].disabled = false
-          }
+      if (this.count == insertionanimations.length){}
+      else{
+        //disable all buttons while function is running
+        toggleButtons()
+        //speed up transition time for all bars
+        const allbars = document.getElementsByClassName("bar")
+        for (let x = 0; x<allbars.length; x++){
+          allbars[x].style.transition = "0.05s";
         }
-      }, 150);
+        //run each animation in turn (150ms per)
+        var fullsolve = setInterval(() => {
+          this.bars[insertionanimations[this.count][0]].dark()
+          this.bars[insertionanimations[this.count][1]].dark()
+          setTimeout(() => {
+            this.bars[insertionanimations[this.count][0]].right(1)
+            this.bars[insertionanimations[this.count][1]].left(1)
+          }, 50);
+          setTimeout(() => {
+            this.bars[insertionanimations[this.count][0]].light()
+            this.bars[insertionanimations[this.count][1]].light()
+            this.count++
+          }, 100);
+          //check if finished
+          if (this.count == insertionanimations.length-1){
+            clearInterval(fullsolve)
+            //when finished, reset transition time and re-enable buttons
+            for (let x = 0; x<allbars.length; x++){
+              allbars[x].style.transition = "1s";
+            }
+            toggleButtons()
+          }
+        }, 150);
+      }
     },
   	next: function(){
-      const buttons = document.getElementsByClassName("button")
-      for (let button=0; button<buttons.length; button++){
-        buttons[button].disabled = true
-      }
-
-      if (this.count < insertionanimations.length) {
-        this.bars[insertionanimations[this.count][0]].dark()
-        this.bars[insertionanimations[this.count][1]].dark()
-        setTimeout(() => {
-          this.bars[insertionanimations[this.count][0]].right(1)
-          this.bars[insertionanimations[this.count][1]].left(1)
-        }, 1000);
-        setTimeout(() => {
-          this.bars[insertionanimations[this.count][0]].light()
-          this.bars[insertionanimations[this.count][1]].light()
-          this.count++
-        }, 2000);
-      }
-      setTimeout(() => {
-        for (let button=0; button<buttons.length; button++){
-          buttons[button].disabled = false
+      if (this.count == bubbleanimations.length){}
+      else{
+        toggleButtons()
+        if (this.count < insertionanimations.length) {
+          this.bars[insertionanimations[this.count][0]].dark()
+          this.bars[insertionanimations[this.count][1]].dark()
+          setTimeout(() => {
+            this.bars[insertionanimations[this.count][0]].right(1)
+            this.bars[insertionanimations[this.count][1]].left(1)
+          }, 1000);
+          setTimeout(() => {
+            this.bars[insertionanimations[this.count][0]].light()
+            this.bars[insertionanimations[this.count][1]].light()
+            this.count++
+          }, 2000);
         }
-      }, 2001);
+        setTimeout(() => {
+          toggleButtons()
+        }, 2001);
+      }
     },
     previous: function(){
       if (this.count > 0){
@@ -343,9 +359,22 @@ var insertion = new Vue({
         opacity:bar.opacity,
       	background:bar.color,
         left: size*(i + bar.offset) + "px",
-        height: (bar.h * 20) + "px"
+        height: (245/numofbars*bar.h) + "px"
       
       } 
     }
   }
 })
+
+
+// import InsertionSortAlgorithm from "./insert";
+// import BubSortAlgorithm from "./insert";
+// import Select
+
+// new Vue({
+
+//   title:
+//   blurb:
+//   algorithms :[{title:"Insertion Sort", code:InsertionSortAlgorithm}, {title,code:}]
+//   selectedAlgorithm:
+// })
