@@ -14,6 +14,8 @@ app.js
 export Vue.extend({
 
 
+
+COMPONENTS
   <title>
   <blurb>
   <graph :selectedAlgorithm="selectedAlgorithm" :bars=bars>

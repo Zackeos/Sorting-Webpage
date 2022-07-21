@@ -1,6 +1,6 @@
 import bubblesort from "./bubblesort.js"
 //settings
-let numofbars = 20
+let numofbars = 30
 let transparency = 0.35
 // let size = 30
 
