@@ -8,7 +8,7 @@ import gnomesort from "./gnomesort.js"
 
 
 
-let numofbars = 12
+let numofbars = 200
 let transparency = 0.35
 const colourslist = randomColor({count: numofbars});
 
@@ -143,8 +143,15 @@ var app = new Vue({
     //function to go through all steps in animation list very fast
     finish: function(){
       let amountper = this.comparisons[this.currentscreen]/this.animations[this.currentscreen].length
+      let timeper = 150/amountper
       console.log(amountper)
-      console.log(this.comparisons)
+      console.log(timeper)
+      if (timeper <4){
+        amountper = amountper*(4/(150/timeper))
+        timeper = 4
+      }
+      console.log(amountper)
+      console.log(timeper)
       if (this.count == this.animations[this.currentscreen].length){
         //pass
       }
