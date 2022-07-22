@@ -1,10 +1,12 @@
 //SELECTION SORT
 export default function selectionsort(temp, initial){
+  let comparisons = 0
   let heights = [...temp]
   let animations = []
   for (let x=0; x<heights.length; x++){
     let maxpos = x
     for (let y=x+1; y<heights.length; y++){
+      comparisons++
       if(heights[maxpos] > heights[y]){
         maxpos = y
       }
@@ -15,5 +17,5 @@ export default function selectionsort(temp, initial){
     heights[x] = tempb
     heights[maxpos] = tempa
   }
-  return animations
+  return [animations, comparisons]
 }

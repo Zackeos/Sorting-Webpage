@@ -90,7 +90,8 @@ var app = new Vue({
       titles: ["Bubble Sort", "Insertion Sort", "Selection Sort", "Gnome Sort"],
       bars: barslist,
       count: 0,
-      animations: [bubbleanimations, insertionanimations, selectionanimations, gnomeanimations],
+      animations: [bubbleanimations[0], insertionanimations[0], selectionanimations[0], gnomeanimations[0]],
+      comparisons: [bubbleanimations[1], insertionanimations[1], gnomeanimations[1], selectionanimations[1]],
       currentscreen: 0
     }
   },
@@ -140,8 +141,7 @@ var app = new Vue({
     },
     //function to go through all steps in animation list very fast
     finish: function(){
-      console.log(this.count)
-      console.log(this.animations[this.currentscreen].length)
+      console.log(this.comparisons)
       if (this.count == this.animations[this.currentscreen].length){
         //pass
       }

@@ -3,7 +3,9 @@ export default function gnomesort(temp, initial){
   let heights = [...temp]
   let animations = []
   let count = 0
+  let comparisons = 0
   while (count < heights.length){
+    comparisons++
     if (count == 0){
       count++
     }
@@ -18,5 +20,5 @@ export default function gnomesort(temp, initial){
       count = count -1
     }
   }
-  return animations
+  return [animations,comparisons]
 }

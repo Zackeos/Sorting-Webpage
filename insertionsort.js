@@ -17,5 +17,5 @@ export default function insertionsort(temp, initial){
     heights[currentpos] = currentvalue
     }
   }
-  return animations
+  return [animations, animations.length]
 }
