@@ -4,12 +4,18 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
-#bubble, #insertion {
+#sorthalf {
   background: #fff;
   height:300px;
-  width:50%;
   position: relative;
   margin-left: 5%;
+  width:45%;
+  box-sizing: border-box;
+  float: left;
+  border: 5px solid white;
+  border-radius: 10px;
+  padding: 10px 10px 0px 10px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 #bars{
   display:flex;
