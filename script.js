@@ -3,8 +3,14 @@ import insertionsort from "./insertionsort.js"
 import selectionsort from "./selectionsort.js"
 import gnomesort from "./gnomesort.js"
 
+
+
+
+
+
 let numofbars = 12
 let transparency = 0.35
+const colourslist = randomColor({count: numofbars});
 
 
 let currentSize = document.getElementById("sorthalf").clientWidth
@@ -70,18 +76,16 @@ var app = new Vue({
     let insertionanimations = insertionsort(heights, initial)
     let selectionanimations = selectionsort(heights, initial)
     let gnomeanimations = gnomesort(heights, initial)
-    const randomColor = function(){
-      return "#"+Math.floor(Math.random()*16777215).toString(16);
-    }
     let barslist = []
     for (let x=0; x<numofbars; x++){
-      let y = new bar(heights[x],randomColor())
+      let y = new bar(heights[x],colourslist[x])
       barslist.push(y)
     }
     return {
+      barsize: size,
       short: shortest,
       initial: initial,
-      currentSize: currentSize,
+      curSize: currentSize,
       finnumofbars: numofbars,
       titles: ["Bubble Sort", "Insertion Sort", "Selection Sort", "Gnome Sort"],
       bars: barslist,
