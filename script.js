@@ -92,7 +92,8 @@ var app = new Vue({
       count: 0,
       animations: [bubbleanimations[0], insertionanimations[0], selectionanimations[0], gnomeanimations[0]],
       comparisons: [bubbleanimations[1], insertionanimations[1], gnomeanimations[1], selectionanimations[1]],
-      currentscreen: 0
+      currentscreen: 0,
+      comps: 0
     }
   },
   mounted() {
@@ -141,6 +142,8 @@ var app = new Vue({
     },
     //function to go through all steps in animation list very fast
     finish: function(){
+      let amountper = this.comparisons[this.currentscreen]/this.animations[this.currentscreen].length
+      console.log(amountper)
       console.log(this.comparisons)
       if (this.count == this.animations[this.currentscreen].length){
         //pass
@@ -154,8 +157,13 @@ var app = new Vue({
           allbars[x].style.transition = "0.05s";
         }
         //run each animation in turn (150ms per)
+        var each = setInterval(() => {
+          this.comps++
+          if (this.comps == this.comparisons[this.currentscreen]){
+            clearInterval(each)
+          }
+        }, 150/amountper);
         var fullsolve = setInterval(() => {
-
           this.bars[this.animations[this.currentscreen][this.count][0]].dark()
           this.bars[this.animations[this.currentscreen][this.count][1]].dark()
           setTimeout(() => {
@@ -177,7 +185,6 @@ var app = new Vue({
           }
         }, 150);
       }
-      
     },
     //perform next animation in this.animations[this.currentscreen]
   	next: function(){
@@ -214,6 +221,7 @@ var app = new Vue({
     //bring back to original state
     reset: function(){
       this.count = 0
+      this.comps = 0
       for (let x = 0; x<this.bars.length; x++) {
         this.bars[x].offset = 0
       }
