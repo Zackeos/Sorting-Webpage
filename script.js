@@ -8,7 +8,7 @@ import gnomesort from "./gnomesort.js"
 
 
 
-let numofbars = 200
+let numofbars = 10
 let transparency = 0.35
 const colourslist = randomColor({count: numofbars});
 
