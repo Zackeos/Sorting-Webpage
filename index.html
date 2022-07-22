@@ -38,7 +38,7 @@
     </div>
     <div id="sorthalf">
       <div id="bars">
-        <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)"><span class="bartext" v-if="((finnumofbars < 22) && !((currentSize/finnumofbars < 50) && (i == 0)))">{{bars[i].h}}</span></div> 
+        <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)"><span class="bartext" v-if="((finnumofbars < 22) && !((currentSize/finnumofbars < 50) && (i == short)))">{{bars[i].h}}</span></div> 
       </div>
       <button class="button" @click="previous"><span class="primary-button-text">Previous</span></button>
       <button class="button" @click="next"><span class="primary-button-text">Next</span></button>

@@ -3,7 +3,7 @@ import insertionsort from "./insertionsort.js"
 import selectionsort from "./selectionsort.js"
 import gnomesort from "./gnomesort.js"
 
-let numofbars = 10
+let numofbars = 21
 let transparency = 0.35
 
 let currentSize = document.getElementById("sorthalf").clientWidth
@@ -29,12 +29,6 @@ class bar{
   dark(){
     this.opacity=1
   }
-  right(amount){
-    this.offset += amount
-  }
-  left(amount){
-    this.offset -= amount
-  }
 }
 
 //CREATING ARRAY OF HEIGHTS
@@ -53,7 +47,8 @@ for (let x=1; x<numofbars+1; x++){
   heights.push(x)
 }
 shuffleArray(heights)
-
+let shortest = heights.indexOf(1)
+console.log(shortest)
 //initial will be used to identify bars using their heights
 let initial = {};
 for (let i = 0; i < heights.length; i++){
@@ -84,6 +79,7 @@ var app = new Vue({
       barslist.push(y)
     }
     return {
+      short: shortest,
       initial: initial,
       currentSize: currentSize,
       finnumofbars: numofbars,
