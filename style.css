@@ -8,8 +8,8 @@ body {
   background: #fff;
   height:300px;
   position: relative;
-  margin-left: 5%;
-  width:45%;
+  margin-left: 1%;
+  width:49%;
   box-sizing: border-box;
   float: left;
   border: 5px solid white;
@@ -31,8 +31,13 @@ body {
   margin: 0px 2px 0px 2px;
   position:absolute;
 }
+.bartext{
+  margin-left: 2px;
+}
 .half{
-  width:45%;
+  width:49%;
+  height: 300px;
+  margin-right: 1%;
   box-sizing: border-box;
   float: left;
   border: 5px solid white;

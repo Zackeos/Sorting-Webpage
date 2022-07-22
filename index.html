@@ -22,30 +22,30 @@
     <img src="menu logo.png" style="height:45px;margin-top:2px;float:left;margin-left:15px" alt="Menu Logo">
     <img src="back logo.png" style="height:45px;margin-top:2px;float:right;" alt="Menu Logo">
   </div>
-  <div id="bubble">
-    <div id="title-banner"><span v-if="currentscreen === 0">Bubble Sort</span><span v-if="currentscreen === 1">Insertion Sort</span></div>
+  <div id="app">
+    <div id="title-banner"><span>{{titles[currentscreen]}}</span></div>
     <div class = "half">
       <div v-if="currentscreen === 0">
-        <p>Bubble sort is a method of ordering a list of items from biggest to smallest or from smallest to biggest, the example on the right of the screen orders the bars from biggest to smallest.</p>
+        <p>Bubble sort is a method of ordering a list of items from biggest to smallest or from smallest to biggest, the example on the right of the screen orders the bars from smallest to biggest.</p>
         <p>At each step the algorithm compares two of the bars, it will swap the bars if the one on the left is smaller than the one on the right, you can click the next button to see this in action.</p>
         <p>The algorithm will move through the whole list swapping items until it reaches the end, at the end it will check to see if the list is sorted, if it is sorted then the algorithm is finished, if not it will go from the beggining of the list again, this will repeat until the list is fully sorted.</p>
       </div>
       <div v-if="currentscreen === 1">
-        <p>Insertion sort is a method of ordering a list of items from biggest to smallest or from smallest to biggest, the example on the right of the screen orders the bars from biggest to smallest.</p>
+        <p>Insertion sort is a method of ordering a list of items from biggest to smallest or from smallest to biggest, the example on the right of the screen orders the bars from smallest to biggest.</p>
         <p>Insertion sort starts with the second value in the list, if the value is smaller than the one on its left, it stays where it is, othewise it will be swapped left until it meets a value bigger than it or it reaches the start of the list.</p>
         <p>The algorithm then repeates this process with the next value, and then the next and the next until it has reached the end of the list, once it has reached this point, the list is sorted.</p>
       </div>
     </div>
     <div id="sorthalf">
       <div id="bars">
-        <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)"></div> 
+        <div class="bar" v-for="bar,i in bars" :style="getBarStyle(i, bar)"><span class="bartext" v-if="((finnumofbars < 22) && !((currentSize/finnumofbars < 50) && (i == 0)))">{{bars[i].h}}</span></div> 
       </div>
       <button class="button" @click="previous"><span class="primary-button-text">Previous</span></button>
       <button class="button" @click="next"><span class="primary-button-text">Next</span></button>
       <button class="button" @click="reset"><span class="primary-button-text">Reset</span></button>
       <button class="button" @click="finish"><span class="primary-button-text">Finish</span></button>
     </div>
-    <button id="bottomr" class="button" @click="switchscreen"><span v-if="currentscreen === 0" class="secondary-button-text">Insertion Sort</span><span v-if="currentscreen === 1" class="secondary-button-text">Bubble Sort</span></button>
+    <button id="bottomr" class="button" @click="switchscreen"><span class="secondary-button-text">{{titles[(currentscreen+1)%(titles.length)]}}</span></button>
   </div>
 
 </body>

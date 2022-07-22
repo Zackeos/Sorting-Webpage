@@ -1,7 +1,9 @@
 import bubblesort from "./bubblesort.js"
 import insertionsort from "./insertionsort.js"
+import selectionsort from "./selectionsort.js"
+import gnomesort from "./gnomesort.js"
 
-let numofbars = 20
+let numofbars = 10
 let transparency = 0.35
 
 let currentSize = document.getElementById("sorthalf").clientWidth
@@ -12,28 +14,7 @@ for (let x=0; x<all.length; x++){
   all[x].style.width = (size-4)+"px";
 }
 
-//generate random array of colours
-const randomColor = function(){
-  return "#"+Math.floor(Math.random()*16777215).toString(16);
-}
-let colours = []
-for (let x=0; x<numofbars; x++){
-  colours.push(randomColor())
-}
 
-
-let toggleButtons = function(){
-  let buttons = document.getElementsByClassName("button")
-  if (buttons[0].disabled){
-    for (let button=0; button<buttons.length; button++){
-      buttons[button].disabled = false
-    }
-  }else{
-    for (let button=0; button<buttons.length; button++){
-      buttons[button].disabled = true
-    }
-  }   
-}
 
 class bar{
   constructor(height, color){
@@ -56,6 +37,8 @@ class bar{
   }
 }
 
+//CREATING ARRAY OF HEIGHTS
+
 //array shuffle function from stack overflow
 function shuffleArray(array) {
   for (var i = array.length - 1; i > 0; i--) {
@@ -65,13 +48,11 @@ function shuffleArray(array) {
       array[j] = temp;
   }
 }
-
 let heights = []
 for (let x=1; x<numofbars+1; x++){
   heights.push(x)
 }
 shuffleArray(heights)
-
 
 //initial will be used to identify bars using their heights
 let initial = {};
@@ -80,31 +61,59 @@ for (let i = 0; i < heights.length; i++){
 }
 
 
-let temp = [...heights]
-let bubbleanimations = bubblesort(heights, initial)
-heights = temp
-temp = [...heights]
-let insertionanimations = insertionsort(heights, initial)
-heights = temp
+
+
+
+
 
 //initialise vue app
 var app = new Vue({
-  el: "#bubble",
+  el: "#app",
   data() {
   	// get the info about the bars
+    let bubbleanimations = bubblesort(heights, initial)
+    let insertionanimations = insertionsort(heights, initial)
+    let selectionanimations = selectionsort(heights, initial)
+    let gnomeanimations = gnomesort(heights, initial)
+    const randomColor = function(){
+      return "#"+Math.floor(Math.random()*16777215).toString(16);
+    }
     let barslist = []
     for (let x=0; x<numofbars; x++){
-      let y = new bar(heights[x],colours[x])
+      let y = new bar(heights[x],randomColor())
       barslist.push(y)
     }
     return {
+      initial: initial,
+      currentSize: currentSize,
+      finnumofbars: numofbars,
+      titles: ["Bubble Sort", "Insertion Sort", "Selection Sort", "Gnome Sort"],
       bars: barslist,
       count: 0,
-      animations: [bubbleanimations, insertionanimations],
+      animations: [bubbleanimations, insertionanimations, selectionanimations, gnomeanimations],
       currentscreen: 0
     }
   },
   methods: {
+    toggleButtons: function(){
+      let buttons = document.getElementsByClassName("button")
+      if (buttons[0].disabled){
+        for (let button=0; button<buttons.length; button++){
+          buttons[button].disabled = false
+        }
+      }else{
+        for (let button=0; button<buttons.length; button++){
+          buttons[button].disabled = true
+        }
+      }   
+    },
+    swapbars: function(a,b,heights){
+      let positiona = a.offset + heights.indexOf(a.h)
+      let positionb = b.offset + heights.indexOf(b.h)
+      let movement = positionb-positiona
+      a.offset += movement
+      b.offset -= movement
+    },
     switchscreen: function(){
       this.reset()
       if (this.currentscreen<this.animations.length-1){
@@ -115,10 +124,14 @@ var app = new Vue({
     },
     //function to go through all steps in animation list very fast
     finish: function(){
-      if (this.count == this.animations[this.currentscreen].length){}
+      console.log(this.count)
+      console.log(this.animations[this.currentscreen].length)
+      if (this.count == this.animations[this.currentscreen].length){
+        //pass
+      }
       else{
         //disable all buttons while function is running
-        toggleButtons()
+        this.toggleButtons()
         //speed up transition time for bars
         const allbars = document.getElementsByClassName("bar")
         for (let x = 0; x<allbars.length; x++){
@@ -130,8 +143,7 @@ var app = new Vue({
           this.bars[this.animations[this.currentscreen][this.count][0]].dark()
           this.bars[this.animations[this.currentscreen][this.count][1]].dark()
           setTimeout(() => {
-            this.bars[this.animations[this.currentscreen][this.count][0]].right(1)
-            this.bars[this.animations[this.currentscreen][this.count][1]].left(1)
+            this.swapbars(this.bars[this.animations[this.currentscreen][this.count][0]],this.bars[this.animations[this.currentscreen][this.count][1]], heights)
           }, 50);
           setTimeout(() => {
             this.bars[this.animations[this.currentscreen][this.count][0]].light()
@@ -145,7 +157,7 @@ var app = new Vue({
             for (let x = 0; x<allbars.length; x++){
               allbars[x].style.transition = "1s";
             }
-            toggleButtons()
+            this.toggleButtons()
           }
         }, 150);
       }
@@ -157,14 +169,13 @@ var app = new Vue({
       else{
         //disable buttons during animation
         const buttons = document.getElementsByClassName("button")
-        toggleButtons()
+        this.toggleButtons()
 
         if (this.count < this.animations[this.currentscreen].length) {
           this.bars[this.animations[this.currentscreen][this.count][0]].dark()
           this.bars[this.animations[this.currentscreen][this.count][1]].dark()
           setTimeout(() => {
-            this.bars[this.animations[this.currentscreen][this.count][0]].right(1)
-            this.bars[this.animations[this.currentscreen][this.count][1]].left(1)
+            this.swapbars(this.bars[this.animations[this.currentscreen][this.count][0]],this.bars[this.animations[this.currentscreen][this.count][1]], heights)
           }, 1000);
           setTimeout(() => {
             this.bars[this.animations[this.currentscreen][this.count][0]].light()
@@ -181,8 +192,7 @@ var app = new Vue({
     previous: function(){
       if (this.count > 0){
         this.count -= 1
-        this.bars[this.animations[this.currentscreen][this.count][0]].left(1)
-        this.bars[this.animations[this.currentscreen][this.count][1]].right(1)
+        this.swapbars(this.bars[this.animations[this.currentscreen][this.count][1]],this.bars[this.animations[this.currentscreen][this.count][0]], heights)
       }
     },
     //bring back to original state
