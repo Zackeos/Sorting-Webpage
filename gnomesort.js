@@ -18,6 +18,5 @@ export default function gnomesort(temp, initial){
       count = count -1
     }
   }
-  console.log(heights)
   return animations
 }

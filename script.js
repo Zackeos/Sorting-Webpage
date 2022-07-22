@@ -6,6 +6,7 @@ import gnomesort from "./gnomesort.js"
 let numofbars = 12
 let transparency = 0.35
 
+
 let currentSize = document.getElementById("sorthalf").clientWidth
 let size = currentSize/numofbars
 
@@ -48,7 +49,6 @@ for (let x=1; x<numofbars+1; x++){
 }
 shuffleArray(heights)
 let shortest = heights.indexOf(1)
-console.log(shortest)
 //initial will be used to identify bars using their heights
 let initial = {};
 for (let i = 0; i < heights.length; i++){
@@ -90,6 +90,12 @@ var app = new Vue({
       currentscreen: 0
     }
   },
+  mounted() {
+    window.addEventListener("resize", this.setsizes)
+  },
+  unmounted(){
+    window.removeEventListener("resize", this.setsizes)
+  },
   methods: {
     toggleButtons: function(){
       let buttons = document.getElementsByClassName("button")
@@ -102,6 +108,16 @@ var app = new Vue({
           buttons[button].disabled = true
         }
       }   
+    },
+    setsizes: function() {
+      currentSize = document.getElementById("sorthalf").clientWidth
+      size = currentSize/numofbars
+      const all = document.getElementsByClassName("bar")
+      for (let x=0; x<all.length; x++){
+        all[x].style.width = (size-4)+"px";
+      }
+      this.bars[0].offset++
+      this.bars[0].offset-=1
     },
     swapbars: function(a,b,heights){
       let positiona = a.offset + heights.indexOf(a.h)
@@ -180,7 +196,7 @@ var app = new Vue({
           }, 2000);
         }
         setTimeout(() => {
-          toggleButtons()
+          this.toggleButtons()
         }, 2001);
       }
     },
