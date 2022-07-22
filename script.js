@@ -3,7 +3,7 @@ import insertionsort from "./insertionsort.js"
 import selectionsort from "./selectionsort.js"
 import gnomesort from "./gnomesort.js"
 
-let numofbars = 21
+let numofbars = 12
 let transparency = 0.35
 
 let currentSize = document.getElementById("sorthalf").clientWidth
